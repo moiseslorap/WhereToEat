@@ -3,7 +3,7 @@ Built a cross platform mobile app that displays the nearest restaurants to the u
 
 ## How to run
 Install Cordova through npm
-Execute the command : **cordova create whereToEat com.yourname.whereToEat WhereToEat**
+Execute the command : [**cordova create whereToEat com.yourname.whereToEat WhereToEat**]
 Download the www folder and use it replace the one on the whereToEat folder.
 Execute command: **cordova platform add (desired-platform)**
 Ex: cordova platform add browser
