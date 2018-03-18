@@ -8,6 +8,37 @@
   <link href="css/index.css" rel="stylesheet" />
   <title>Where to Eat</title>
 
+ 
+</head>
+
+<body>
+  <div id="queries">
+    
+    <select id="categories" class="js-example-basic-single" name="category">
+      <option></option>
+      <!-- <option value="none" disabled selected>Choose a category</option> -->
+    </select>
+
+    <button onclick="saveCategory();">Apply</button> 
+
+    <select id="cuisines" class="js-example-basic-multiple" name="cuisines[]" multiple="multiple">
+      <!-- <option value="none" disabled selected>Choose a cuisine</option> -->
+    </select>
+    <button onclick="saveCuisines();">Apply</button> 
+
+    <input id="search" type="text" name="Search" placeholder="Enter your search query">
+    <button onclick="saveSearch();">Apply</button>  
+    <br />
+    <button onclick="applyAll();">Apply All</button>  
+
+  </div>
+  <div id="map-canvas">
+    <h3>Loading.... Please wait...</h3>
+  </div>
+  <div class="card" id="restaurants">
+    
+  </div>
+
   <script src="cordova.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN9Dwitb2cjEuouUSW2As_Ot5vrzLmhY0&libraries=geometry"></script>
@@ -15,15 +46,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
   <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 
-</head>
-
-<body>
-  <div id="map-canvas">
-    <h3>Loading map. Please wait...</h3>
-  </div>
-  <div class="card" id="restaurants">
-    
-  </div>
 </body>
 
 </html>

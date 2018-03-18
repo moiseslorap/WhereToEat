@@ -1,23 +1,53 @@
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"),
+       local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"),
+       local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+a{
+  color:black;
+  font-weight: bold;
+}
+
+a:hover{
+  color: darkgrey;  
+}
 html {
     height: 100% 
 }
 body {
     height: 100%;
     margin: 0;
-    padding: 0 
+    padding: 0;
+    font-family: system;
 }
 #map-canvas { 
-  height: 30%;
-  top:40%;
+  height: 35%;
   vertical-align: middle;
+  padding: 1em;
 }
-select{
-  position: absolute;
-  bottom:100px;
-  left:0;
-  background-color: ghostwhite;
-  padding: .5em;
-  z-index: 1;
+
+#search {
+  background-color: white;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  width: 79.25%;
+  height: 32px;
+  font-size: 100%;
+  padding-left:0.5em;
+}
+#search:focus {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+
+#queries select{
+  width: 80%;
+  height: 31px;
 }
 
 .card-panel, .card{
@@ -34,7 +64,7 @@ select{
     transition: box-shadow .25s;
     transition: box-shadow .25s, -webkit-box-shadow .25s;
     border-radius: 2px;
-    height: 20%;
+    height: 40%;
     width: 100%;
     overflow-y: scroll;
   }
@@ -48,18 +78,6 @@ select{
   
   .card .card-action:last-child {
     border-radius: 0 0 2px 2px;
-  }
-  
-  .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
-    color: #ffab40;
-    margin-right: 24px;
-    -webkit-transition: color .3s ease;
-    transition: color .3s ease;
-    text-transform: uppercase;
-  }
-  
-  .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating):hover {
-    color: #ffd8a6;
   }
 
   .hoverable {
