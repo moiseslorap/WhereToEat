@@ -293,7 +293,6 @@ function applyAll() {
     cuisines = "&cuisines=" + $('#cuisines').select2("val").toString();
     //if(document.getElementById("search").value != "")
     search = "q=" + document.getElementById("search").value;
-    alert(category, cuisines, search);
     requestRestaurants();
     map.panTo(myLatlng);
     $('#categories').val('').trigger('change');
