@@ -8,35 +8,85 @@
   <link href="css/index.css" rel="stylesheet" />
   <title>Where to Eat</title>
 
- 
+
 </head>
 
 <body>
+  <nav>
+    <a onclick="openNav()">&#9776;</a>
+    <span>Where to eat</span>
+  </nav>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <h1>Settings</h1>
+    <form id="settings">
+    <!-- Begin Form -->
+      <!-- Latitude -->
+      <label for="lat">Latitude: </label>
+      <input id="lat" type="text" name="Latitude" placeholder="">
+      <!-- Longitude -->
+      <label for="lng">Longitude: </label>
+      <input id="lng" type="text" name="Longitude" placeholder="">
+      <!-- Travel Mode -->
+      <label for="travel">Travel Mode:</label>
+      <select id="travelMode">
+        <option value="driving">Driving</option>
+        <option value="walking">Walking</option>
+        <option value="bycicling">Bycicling</option>
+        <option value="transit">Transit</option>
+      </select>
+      <!-- Results Count -->
+      <label for="results">Results Count: </label>
+      <br/>
+      <input id="results" type="text" name="Results" placeholder="">
+      <!-- Maximum miles -->
+      <label for="miles">Maximum miles radius: </label>
+      <br/>
+      <input id="miles" type="text" name="Miles" placeholder="">
+      <!-- Sort -->
+      <label for="sort">Sort by: </label>
+      <br/>
+      <select id="sortBy">
+        <option value="cost">Cost</option>
+        <option value="rating">Rating</option>
+        <option value="real_distance">Distance</option>
+      </select>
+      <!-- Order -->
+      <label for="results">Order by: </label>
+      <select id="orderBy">
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+      <!-- End of Form -->
+    </form>
+  </div>
   <div id="queries">
-    
-    <select id="categories" class="js-example-basic-single" name="category">
-      <option></option>
-      <!-- <option value="none" disabled selected>Choose a category</option> -->
+
+    <div style="margin-bottom:1em">
+      <label for="categories">Filter by categories</label>
+      <select id="categories" name="category">
+        <option></option>
+      </select>
+    </div>
+    <label for="cuisines">Filter by cuisines</label>
+    <select id="cuisines" name="cuisines[]" multiple="multiple">
     </select>
-
-    <button onclick="saveCategory();">Apply</button> 
-
-    <select id="cuisines" class="js-example-basic-multiple" name="cuisines[]" multiple="multiple">
-      <!-- <option value="none" disabled selected>Choose a cuisine</option> -->
-    </select>
-    <button onclick="saveCuisines();">Apply</button> 
-
-    <input id="search" type="text" name="Search" placeholder="Enter your search query">
-    <button onclick="saveSearch();">Apply</button>  
-    <br />
-    <button onclick="applyAll();">Apply All</button>  
+    <!-- <button onclick="saveCuisines();">Apply</button> -->
+    <div style="margin-top:1em">
+      <label for="search">Filter by search query</label>
+      <input id="search" type="text" name="Search" placeholder="Enter your search query">
+      <!-- <button onclick="saveSearch();">Apply</button> -->
+    </div>
+    <button class="btn" onclick="applyAll();">
+      <span>Apply any!</span>
+    </button>
 
   </div>
   <div id="map-canvas">
     <h3>Loading.... Please wait...</h3>
   </div>
   <div class="card" id="restaurants">
-    
+
   </div>
 
   <script src="cordova.js"></script>

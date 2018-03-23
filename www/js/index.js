@@ -46,10 +46,14 @@ var markersArray = [];
 var markersDict = {};
 var contentDict = {};
 var infoWindow = new google.maps.InfoWindow;
-var lat, lng, map, mapOptions, latLng, cuisinesList, distance, content, address,myLatlng;
-var category = "";
+var lat, lng, miles, count, map, mapOptions, latLng, cuisinesList, distance, content, address,myLatlng;
+var category = "    ";
 var cuisines = "";
 var search = "";
+var travelSelection = "";
+var sortSelection = "";
+var orderSelection = "";
+
 //var cuisines
 var key = 'cbc783e9fb1cbd2140eeb68d9e5323e7';
 
@@ -66,9 +70,14 @@ function onSuccess(position) {
         console.log(lat, lng);
         //Google Maps
         myLatlng = new google.maps.LatLng(lat, lng);
-        mapOptions = { zoom: 13, center: myLatlng, mapTypeId: google.maps.MapTypeId.ROADMAP };
+        mapOptions = {
+			zoom: 13,
+			center: myLatlng,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			gestureHandling: 'greedy',
+			mapTypeControl: false    
+		};
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
     }
     requestRestaurants();
     requestCategories();
@@ -77,7 +86,7 @@ function onSuccess(position) {
 
 function requestRestaurants() {
     let request = new XMLHttpRequest();
-    let url = 'https://developers.zomato.com/api/v2.1/search?' + search + '&count=20&lat=' + lat + '&' + 'lon=' + lng + category + cuisines + '&radius=25000&sort=rating&order=desc';
+    let url = 'https://developers.zomato.com/api/v2.1/search?' + search + '&count=' + count + '&lat=' + lat + '&' + 'lon=' + lng + category + cuisines + '&radius=25000&sort=rating&order=desc';
     request.open('GET', url, true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("X-Zomato-API-Key", key);
@@ -263,35 +272,10 @@ $(document).ready(function () {
         allowClear: true
     });
 });
-function saveCategory() {
-    category = "&category=" + $('#categories').select2("val");
-    requestRestaurants();
-    map.panTo(myLatlng);    
-    $('#categories').val('').trigger('change');
-    category = "";
-}
-function saveCuisines() {
-    cuisines = "&cuisines=" + $('#cuisines').select2("val").toString();
-    requestRestaurants();
-    map.panTo(myLatlng);
-    $('#cuisines').val('').trigger('change');
-    cuisines = "";
-}
-
-function saveSearch() {
-    search = "q=" + document.getElementById("search").value;
-    requestRestaurants();
-    map.panTo(myLatlng);
-    document.getElementById("search").value = '';
-    search = "";
-}
 
 function applyAll() {
-    //if($('#categories').select2("val") != "")
     category = "&category=" + $('#categories').select2("val");
-    //if($('#cuisines').select2("val") != "")
     cuisines = "&cuisines=" + $('#cuisines').select2("val").toString();
-    //if(document.getElementById("search").value != "")
     search = "q=" + document.getElementById("search").value;
     requestRestaurants();
     map.panTo(myLatlng);
@@ -302,7 +286,6 @@ function applyAll() {
     document.getElementById("search").value = '';
     search = "";
 }
-
 
 function generateDirections(data) {
     return "https://www.google.com/maps/dir/?api=1&origin=" + lat + "," + lng + "&destination=" + data.latitude + "," + data.longitude + "&travelmode=driving"
@@ -349,4 +332,27 @@ function generatePrice(data) {
     else {
         return "N/A"
     }
+}
+
+function applySettings(){
+    let travel = document.getElementById("travelMode");
+    if (travel != "")
+        travelSelection = travel.optitons[travel.selectedIndex].value;
+    let sort = document.getElementById("sortBy");
+    if (sort != "")
+        sortSelection = sortSelection.options[sortSelection.selectedIndex].value;
+    let order = document.getElementById("orderBy");
+    orderSelection = orderSelection.options[orderSelction.selectedIndex].value;
+    lat = document.getElementById("lat");
+    lng = document.getElementById("lng");
+    count = document.getElementById("results");
+    miles = document.getElementById("miles");
+}
+
+function openNav() {
+    document.getElementById("mySidenav").style.width = "275px";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
 }
