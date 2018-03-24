@@ -19,7 +19,6 @@
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <h1>Settings</h1>
-    <form id="settings">
     <!-- Begin Form -->
       <!-- Latitude -->
       <label for="lat">Latitude: </label>
@@ -28,15 +27,16 @@
       <label for="lng">Longitude: </label>
       <input id="lng" type="text" name="Longitude" placeholder="">
       <!-- Travel Mode -->
-      <label for="travel">Travel Mode:</label>
+      <label for="travel">Travel mode:</label>
       <select id="travelMode">
+        <option value="" selected disabled hidden>Select travel mode</option>
         <option value="driving">Driving</option>
         <option value="walking">Walking</option>
         <option value="bycicling">Bycicling</option>
         <option value="transit">Transit</option>
       </select>
       <!-- Results Count -->
-      <label for="results">Results Count: </label>
+      <label for="results">Results count: </label>
       <br/>
       <input id="results" type="text" name="Results" placeholder="">
       <!-- Maximum miles -->
@@ -47,6 +47,7 @@
       <label for="sort">Sort by: </label>
       <br/>
       <select id="sortBy">
+        <option value="" selected disabled hidden>Selected sort</option>
         <option value="cost">Cost</option>
         <option value="rating">Rating</option>
         <option value="real_distance">Distance</option>
@@ -54,11 +55,12 @@
       <!-- Order -->
       <label for="results">Order by: </label>
       <select id="orderBy">
+        <option value="" selected disabled hidden>Select order</option>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
       </select>
       <!-- End of Form -->
-    </form>
+      <button class="btn" onclick="applySettings();"> Apply Settings</button>
   </div>
   <div id="queries">
 

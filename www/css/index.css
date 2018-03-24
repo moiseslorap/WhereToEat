@@ -231,6 +231,22 @@ nav a{
     font-size: 12px;
     cursor: pointer;
 }
+
+btn{
+
+  width: 3%;
+  display: block;
+  line-height: 1px;
+  color: #fbfbfb;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid white;
+  background-color: transparent;
+  padding: 14px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
 nav span{
     text-align: left;
     padding-left: 3em;

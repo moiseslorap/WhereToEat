@@ -46,13 +46,16 @@ var markersArray = [];
 var markersDict = {};
 var contentDict = {};
 var infoWindow = new google.maps.InfoWindow;
-var lat, lng, miles, count, map, mapOptions, latLng, cuisinesList, distance, content, address,myLatlng;
-var category = "    ";
+var lat, lng, map, mapOptions, latLng, cuisinesList, distance, content, address, myLatlng;
+var category = "";
 var cuisines = "";
 var search = "";
-var travelSelection = "";
-var sortSelection = "";
-var orderSelection = "";
+var travelSelection = "driving";
+var sortSelection = "rating";
+var orderSelection = "desc";
+var miles = "25000";
+var count = "20";
+
 
 //var cuisines
 var key = 'cbc783e9fb1cbd2140eeb68d9e5323e7';
@@ -71,12 +74,12 @@ function onSuccess(position) {
         //Google Maps
         myLatlng = new google.maps.LatLng(lat, lng);
         mapOptions = {
-			zoom: 13,
-			center: myLatlng,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			gestureHandling: 'greedy',
-			mapTypeControl: false    
-		};
+            zoom: 13,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            gestureHandling: 'greedy',
+            mapTypeControl: false
+        };
         map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     }
     requestRestaurants();
@@ -86,7 +89,9 @@ function onSuccess(position) {
 
 function requestRestaurants() {
     let request = new XMLHttpRequest();
-    let url = 'https://developers.zomato.com/api/v2.1/search?' + search + '&count=' + count + '&lat=' + lat + '&' + 'lon=' + lng + category + cuisines + '&radius=25000&sort=rating&order=desc';
+    let url = 'https://developers.zomato.com/api/v2.1/search?' + search + '&count=' + count + '&lat=' + lat + '&lon=' + lng +
+        category + cuisines + '&radius=' + miles + '&sort=' + sortSelection + '&order=' + orderSelection;
+    console.log(url);
     request.open('GET', url, true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("X-Zomato-API-Key", key);
@@ -178,8 +183,8 @@ function addRestaurantCards(data) {
     for (var i = 0; i < data.length; i++) {
         var res = data[i].restaurant;
         let distance = calculateDistance(lat, lng, res.location.latitude, res.location.longitude);
-         
-        output += "<div id='" + res.id + "' class='card-action' onclick='setMarker("+ res.id + ");'>"
+
+        output += "<div id='" + res.id + "' class='card-action' onclick='setMarker(" + res.id + ");'>"
             + "<span><a href='" + res.url + "'>" + res.name + "</a> (" + distance + " miles away) </span> <p> "
             + "<a href='" + generateDirections(res.location) + "'>" + res.location.address + "</a> <br /><b> Cuisines:</b> " + res.cuisines
             + "<br /> <b> User Rating: </b> " + generateStars(res.user_rating.aggregate_rating)
@@ -209,19 +214,19 @@ function addMarker(data) {
     markersDict[data.id] = marker;
     (function (marker, data) {
         google.maps.event.addListener(marker, "click", function (e) {
-            
+
             bindInfoWindow(marker, map, infoWindow, data);
         });
     })(marker, data);
 }
 
-function setMarker(id){
+function setMarker(id) {
     map.setCenter(markersDict[id].getPosition());
     infoWindow.setContent(contentDict[id]);
-    infoWindow.open(map,markersDict[id]);
+    infoWindow.open(map, markersDict[id]);
 }
 function bindInfoWindow(marker, map, infoWindow, data) {
-    
+
     content = generateContent(data);
     contentDict[data.id] = content;
     marker.addListener('click', function () {
@@ -231,7 +236,7 @@ function bindInfoWindow(marker, map, infoWindow, data) {
     });
 }
 
-function generateContent(data){
+function generateContent(data) {
     distance = calculateDistance(lat, lng, data.location.latitude, data.location.longitude);
     address = data.location.address.split(',');
     content = "<b>" + data.name + "</b> <br/>" +
@@ -288,7 +293,7 @@ function applyAll() {
 }
 
 function generateDirections(data) {
-    return "https://www.google.com/maps/dir/?api=1&origin=" + lat + "," + lng + "&destination=" + data.latitude + "," + data.longitude + "&travelmode=driving"
+    return "https://www.google.com/maps/dir/?api=1&origin=" + lat + "," + lng + "&destination=" + data.latitude + "," + data.longitude + "&travelmode=" + travelMode;
 }
 
 function generateCost(data) {
@@ -334,19 +339,37 @@ function generatePrice(data) {
     }
 }
 
-function applySettings(){
-    let travel = document.getElementById("travelMode");
+//encode trim and 
+
+function applySettings() {
+    let travelMode = document.getElementById("travelMode")
+    travel = travelMode.options[travelMode.selectedIndex].value;
     if (travel != "")
-        travelSelection = travel.optitons[travel.selectedIndex].value;
-    let sort = document.getElementById("sortBy");
+        travelSelection = travel;
+    let sortSel = document.getElementById("sortBy")
+    sort = sortSel.options[sortSel.selectedIndex].value;
     if (sort != "")
-        sortSelection = sortSelection.options[sortSelection.selectedIndex].value;
-    let order = document.getElementById("orderBy");
-    orderSelection = orderSelection.options[orderSelction.selectedIndex].value;
-    lat = document.getElementById("lat");
-    lng = document.getElementById("lng");
-    count = document.getElementById("results");
-    miles = document.getElementById("miles");
+        sortSelection = sort;
+    let orderSel = document.getElementById("orderBy")
+    order = orderSel.options[orderSel.selectedIndex].value;
+    if (orderSelection != "")
+        orderSelection = order;
+    let latVal = document.getElementById("lat").value;
+    if (latVal != "")
+        lat = latVal;
+    let lngVal = document.getElementById("lng").value;
+    if (lngVal != "")
+        lng = lngVal;
+    let countVal = document.getElementById("results").value;
+    if (countVal != "")
+        count = countVal.trim();
+    let milesVal = document.getElementById("miles").value;
+    if (milesVal != "")
+        miles = milesVal.trim();
+    requestRestaurants();
+    let newLatLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    map.setCenter(newLatLng);
+    closeNav();
 }
 
 function openNav() {
