@@ -16,6 +16,13 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+function checkSecure() {
+    if (location.protocol != 'https:') {
+        location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+    }
+}
+
 var app = {
     // Application Constructor
     initialize: function () {
@@ -95,30 +102,68 @@ function requestRestaurants() {
     request.open('GET', url, true);
     request.setRequestHeader("Accept", "application/json");
     request.setRequestHeader("X-Zomato-API-Key", key);
-    request.onload = function () {
-
-        // Begin accessing JSON data here
-
-        if (request.status >= 200 && request.status < 400) {
+    request.onreadystatechange = function (e) {
+        if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.response);
             addRestaurantCards(data.restaurants);
             clearOverlays();
             markersDict = {};
             addMarkers(data.restaurants);
         } else {
-            console.log('error');
+            console.log('e');
         }
     }
+    request.send();
+}
 
+function requestCategories() {
+
+    let request = new XMLHttpRequest();
+
+    let url = 'https://developers.zomato.com/api/v2.1/categories';
+    request.open('GET', url, true);
+    console.log(url)
+    request.setRequestHeader("Accept", "application/json");
+    request.setRequestHeader("X-Zomato-API-Key", key);
+    request.onreadystatechange = function (e) {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.response);
+            populateSelect('categories', data.categories);
+            
+        } else {
+            console.log('e');
+        }
+    }
+    request.send();
+}
+
+function requestCuisines() {
+
+    var request = new XMLHttpRequest();
+    var url = 'https://developers.zomato.com/api/v2.1/cuisines?lat=' + lat + '&lon=' + lng;
+    console.log(url);
+    request.open('GET', url, true);
+    request.setRequestHeader("Accept", "application/json");
+    request.setRequestHeader("X-Zomato-API-Key", key);
+    request.onreadystatechange = function (e) {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.response);
+            populateSelect('cuisines', data.cuisines);
+        } 
+        else {
+            console.log('e');
+        }
+    };
     request.send();
 }
 
 function populateSelect(item, data) {
-    var select = document.getElementById(item);
-    var fragment = document.createDocumentFragment();
-
+    let select = document.getElementById(item);
+    if (select.options.length > 1)
+        select.innerHTML = "";
+    let fragment = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
-        var option = document.createElement('option');
+        let option = document.createElement('option');
         if (item == 'categories') {
             option.innerHTML = data[i].categories.name;
             option.value = data[i].categories.id;
@@ -130,45 +175,6 @@ function populateSelect(item, data) {
         fragment.appendChild(option);
     };
     select.appendChild(fragment);
-}
-
-function requestCategories() {
-
-    var request = new XMLHttpRequest();
-
-    var url = 'https://developers.zomato.com/api/v2.1/categories';
-    request.open('GET', url, true);
-    request.setRequestHeader("Accept", "application/json");
-    request.setRequestHeader("X-Zomato-API-Key", key);
-    request.onload = function () {
-        if (request.status >= 200 && request.status < 400) {
-            let json = request.responseText;
-            let data = JSON.parse(json);
-            populateSelect('categories', data.categories);
-        } else {
-            console.log('error');
-        }
-    }
-    request.send();
-}
-
-function requestCuisines() {
-
-    var request = new XMLHttpRequest();
-    var url = 'https://developers.zomato.com/api/v2.1/cuisines?lat=' + lat + '&lon=' + lng;
-    request.open('GET', url, true);
-    request.setRequestHeader("Accept", "application/json");
-    request.setRequestHeader("X-Zomato-API-Key", key);
-    request.onload = function () {
-        if (request.status >= 200 && request.status < 400) {
-            let data = JSON.parse(this.response);
-            populateSelect('cuisines', data.cuisines);
-        } else {
-            console.log('error');
-        }
-    }
-
-    request.send();
 }
 
 function calculateDistance(latitude1, longitude1, latitude2, longitude2) {
@@ -261,7 +267,7 @@ function onError(error) {
     alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
 }
 
-google.maps.event.addDomListener(window, 'load', onSuccess);
+google.maps.event.addDomListener(window, 'load');
 
 $(document).ready(function () {
     $('#categories').select2({
@@ -281,9 +287,10 @@ $(document).ready(function () {
 function applyAll() {
     category = "&category=" + $('#categories').select2("val");
     cuisines = "&cuisines=" + $('#cuisines').select2("val").toString();
-    search = "q=" + document.getElementById("search").value;
+    search = "q=" + encodeURI(document.getElementById("search").value);
     requestRestaurants();
-    map.panTo(myLatlng);
+    latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    map.panTo(latLng);
     $('#categories').val('').trigger('change');
     category = "";
     $('#cuisines').val('').trigger('change');
@@ -293,7 +300,7 @@ function applyAll() {
 }
 
 function generateDirections(data) {
-    return "https://www.google.com/maps/dir/?api=1&origin=" + lat + "," + lng + "&destination=" + data.latitude + "," + data.longitude + "&travelmode=" + travelMode;
+    return "https://www.google.com/maps/dir/?api=1&origin=" + lat + "," + lng + "&destination=" + data.latitude + "," + data.longitude + "&travelmode=" + travelSelection;
 }
 
 function generateCost(data) {
@@ -343,15 +350,15 @@ function generatePrice(data) {
 
 function applySettings() {
     let travelMode = document.getElementById("travelMode")
-    travel = travelMode.options[travelMode.selectedIndex].value;
+    let travel = travelMode.options[travelMode.selectedIndex].value;
     if (travel != "")
         travelSelection = travel;
-    let sortSel = document.getElementById("sortBy")
-    sort = sortSel.options[sortSel.selectedIndex].value;
+    let sortSel = document.getElementById("sort")
+    let sort = sortSel.options[sortSel.selectedIndex].value;
     if (sort != "")
         sortSelection = sort;
-    let orderSel = document.getElementById("orderBy")
-    order = orderSel.options[orderSel.selectedIndex].value;
+    let orderSel = document.getElementById("order")
+    let order = orderSel.options[orderSel.selectedIndex].value;
     if (orderSelection != "")
         orderSelection = order;
     let latVal = document.getElementById("lat").value;
@@ -362,13 +369,15 @@ function applySettings() {
         lng = lngVal;
     let countVal = document.getElementById("results").value;
     if (countVal != "")
-        count = countVal.trim();
+        count = countVal;
     let milesVal = document.getElementById("miles").value;
     if (milesVal != "")
-        miles = milesVal.trim();
+        miles = Math.round((parseFloat(milesVal) * 1609.344));
+    console.log(miles);
     requestRestaurants();
-    let newLatLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
-    map.setCenter(newLatLng);
+    requestCuisines();
+    latLng = new google.maps.LatLng(parseFloat(lat), parseFloat(lng));
+    map.setCenter(latLng);
     closeNav();
 }
 

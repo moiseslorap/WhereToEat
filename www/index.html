@@ -7,11 +7,9 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
   <title>Where to Eat</title>
-
-
 </head>
-
 <body>
+<!-- <body onload="checkSecure();"> -->
   <nav>
     <a onclick="openNav()">&#9776;</a>
     <span>Where to eat</span>
@@ -46,7 +44,7 @@
       <!-- Sort -->
       <label for="sort">Sort by: </label>
       <br/>
-      <select id="sortBy">
+      <select id="sort">
         <option value="" selected disabled hidden>Selected sort</option>
         <option value="cost">Cost</option>
         <option value="rating">Rating</option>
@@ -54,7 +52,7 @@
       </select>
       <!-- Order -->
       <label for="results">Order by: </label>
-      <select id="orderBy">
+      <select id="order">
         <option value="" selected disabled hidden>Select order</option>
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>

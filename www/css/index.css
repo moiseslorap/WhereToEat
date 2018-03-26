@@ -232,11 +232,9 @@ nav a{
     cursor: pointer;
 }
 
-btn{
+.btn{
 
-  width: 3%;
   display: block;
-  line-height: 1px;
   color: #fbfbfb;
   transition: background-color 0.2s ease;
   text-transform: uppercase;
@@ -244,7 +242,7 @@ btn{
   border: 1px solid white;
   background-color: transparent;
   padding: 14px 10px;
-  font-size: 12px;
+  font-size: 16px;
   cursor: pointer;
 }
 nav span{
