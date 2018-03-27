@@ -129,7 +129,7 @@ function requestCategories() {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.response);
             populateSelect('categories', data.categories);
-            
+
         } else {
             console.log('e');
         }
@@ -149,7 +149,27 @@ function requestCuisines() {
         if (this.readyState == 4 && this.status == 200) {
             let data = JSON.parse(this.response);
             populateSelect('cuisines', data.cuisines);
-        } 
+        }
+        else {
+            console.log('e');
+        }
+    };
+    request.send();
+}
+
+function requestCityInfo() {
+
+    var request = new XMLHttpRequest();
+    var url = 'https://developers.zomato.com/api/v2.1/geocode?lat=' + lat + '&lon=' + lng;
+    console.log(url);
+    request.open('GET', url, true);
+    request.setRequestHeader("Accept", "application/json");
+    request.setRequestHeader("X-Zomato-API-Key", key);
+    request.onreadystatechange = function (e) {
+        if (this.readyState == 4 && this.status == 200) {
+            let data = JSON.parse(this.response);
+            addCityCard(data);
+        }
         else {
             console.log('e');
         }
@@ -199,6 +219,21 @@ function addRestaurantCards(data) {
             + "</div>";
     }
     document.getElementById("restaurants").innerHTML = output;
+}
+
+function addCityCard(data) {
+    let output = "";
+    output += "<div id='" + data.location.entity_id + "' class='card-action'>"
+        + "<br /> <b> Location: </b> " + data.location.title 
+        + "<br /> <b> City: </b> " + data.location.city_name
+        + "<br /> <b> Popularity Rating: </b> " + generateStars(data.popularity.popularity)
+        + "<br /> <b> Nightlife Rating: </b> " + generateStars(data.popularity.popularity)
+        + "<br /> <b> Top Cuisines: </b> " +  data.popularity.top_cuisines.join(', ');
+        + "</div>";
+    
+    document.getElementById("cityInfo").innerHTML = output;
+    document.getElementById("queries").style.display = "none";
+    document.getElementById("cityInfo").style.display = "flex";
 }
 
 function addMarkers(data) {
