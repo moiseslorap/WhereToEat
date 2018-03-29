@@ -41,8 +41,15 @@ body {
 
 #buttons{
   margin-top:3em;
+  width:100%;
   padding: 2em;
 }
+
+#buttons imgcol{
+  width: 33.3%;
+  float: left;
+}
+
 #queries label{
   font-weight: bold;
   padding: 0;
@@ -58,23 +65,9 @@ label{
   padding-left: 1em;
   
 }
-#search {
-  background-color: white;
-  border: 1px solid #aaa;
-  border-radius: 4px;
-  width: 97.25%;
-  height: 30px;
-  font-size: 100%;
-  padding-left:0.4em;
-  margin-bottom: 0.3em;
-}
-#search:focus {
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 4px;
-}
 
-select{
+
+select,input{
   background-color: white;
   border: 1px solid #aaa;
   border-radius: 4px;
@@ -245,19 +238,6 @@ nav a{
     cursor: pointer;
 }
 
-.btn{
-
-  display: block;
-  color: #fbfbfb;
-  transition: background-color 0.2s ease;
-  text-transform: uppercase;
-  text-decoration: none;
-  border: 1px solid white;
-  background-color: transparent;
-  padding: 14px 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
 nav span{
     text-align: left;
     padding-left: 3em;
@@ -282,7 +262,6 @@ nav a:hover {
 
   display: block;
   margin: 20px auto;
-  padding: 0;
 
   overflow: hidden;
 
@@ -295,6 +274,10 @@ nav a:hover {
   color: #ecf0f1;
   
   transition: background-color .3s;
+  padding: 14px 10px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: system;
 }
 
 .btn:hover, .btn:focus {
@@ -307,7 +290,6 @@ nav a:hover {
 
 .btn span {
   display: block;
-  padding: 12px 24px;
   text-transform: uppercase;
 }
 
@@ -339,3 +321,5 @@ nav a:hover {
   
   transition: width .2s ease-out, padding-top .2s ease-out;
 }
+
+select:invalid{color:lightgray;}
