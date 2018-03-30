@@ -179,6 +179,8 @@ function addCard(data, call) {
                 + "</div>";
         }
         document.getElementById("restaurants").innerHTML = output;
+        if (document.getElementById("restaurants").innerHTML == "")
+            alert("No results!");
     }
     else if (call === 'cityInfo') {
 
