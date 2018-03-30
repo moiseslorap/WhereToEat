@@ -62,9 +62,7 @@ var sortSelection = "rating";
 var orderSelection = "desc";
 var miles = "25000";
 var count = "20";
-
-
-//var cuisines
+var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
 var key = 'cbc783e9fb1cbd2140eeb68d9e5323e7';
 
 app.initialize();
@@ -92,6 +90,11 @@ function onSuccess(position) {
     request('restaurants');
     request('categories');
     request('cuisines');
+    var beachMarker = new google.maps.Marker({
+        position: {lat, lng},
+        map: map,
+        icon: image
+      });
 }
 
 function request(call) {
