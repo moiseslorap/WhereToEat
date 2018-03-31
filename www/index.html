@@ -6,19 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
   <link href="css/index.css" rel="stylesheet" />
-  <title>Where to Eat</title>
+  <title>Where to eat</title>
 </head>
 
 <body>
   <!-- <body onload="checkSecure();"> -->
+  <!-- Top Nav Bar -->
   <nav>
     <a onclick="openNav()">&#9776;</a>
     <span>Where to eat</span>
   </nav>
+  <!-- Top Nav Bar Ends -->
+
+  <!-- Settings Side Nav -->
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <!-- Title -->
     <h1>Settings</h1>
-    <!-- Begin Form -->
     <!-- Latitude -->
     <label for="lat">Latitude: </label>
     <input id="lat" type="text" name="Latitude" placeholder="">
@@ -31,11 +35,11 @@
       <option value="" selected disabled hidden>Select travel mode</option>
       <option value="driving">Driving</option>
       <option value="walking">Walking</option>
-      <option value="bycicling">Bycicling</option>
+      <option value="bicycling">Bicycling</option>
       <option value="transit">Transit</option>
     </select>
     <!-- Results Count -->
-    <label for="results">Results count: </label>
+    <label for="results">Results count: (MAX 20)</label>
     <br/>
     <input id="results" type="text" name="Results" placeholder="">
     <!-- Maximum miles -->
@@ -58,51 +62,52 @@
       <option value="asc">Ascending</option>
       <option value="desc">Descending</option>
     </select>
-    <!-- End of Form -->
-    <button class="btn white" onclick="applySettings();"> Apply Settings</button>
+    <button class="btn" onclick="applySettings();"> Apply Settings</button>
   </div>
+  <!-- Settings Side Nav ends -->
 
+  <!-- Queries -->
   <div id="queries">
+    <!-- Select Category -->
     <div class="boxes">
       <label for="categories">Filter by categories</label>
       <select id="categories" name="category">
         <option value="" disabled selected hidden>Please choose a category</option>
       </select>
     </div>
+    <!-- Select Cuisines -->
     <div class="boxes">
       <label for="cuisines">Filter by cuisines</label>
       <select id="cuisines" name="cuisines">
         <option value="" disabled selected hidden>Please choose a cuisine</option>
       </select>
     </div>
-    <!-- <button onclick="saveCuisines();">Apply</button> -->
-
-
-
+    <!-- Search Query -->
     <label for="search">Filter by search query</label>
     <input id="search" type="text" name="Search" placeholder="Enter your search query">
-    <!-- <button onclick="saveSearch();">Apply</button> -->
     <button class="btn" onclick="applyAll();">
       <span>Apply any!</span>
     </button>
-
   </div>
+  <!-- Queries end -->
 
-  <div id="cityInfo">
-
-  </div>
-
-
+  <!-- Map Canvas -->
   <div id="map-canvas">
     <h3>Loading.... Please wait...</h3>
   </div>
+  <!-- Map Canvas end -->
+
+  <!-- Restaurants -->
   <div class="card" id="restaurants">
 
   </div>
+  <!-- Restaurants end -->
 
+  <!-- Scripts -->
   <script src="cordova.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAN9Dwitb2cjEuouUSW2As_Ot5vrzLmhY0&libraries=geometry"></script>
   <script src="js/index.js"></script>
+  <!-- End of body -->
 </body>
 
 </html>

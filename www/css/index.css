@@ -1,12 +1,3 @@
-@font-face {
-  font-family: system;
-  font-style: normal;
-  font-weight: 300;
-  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"),
-       local(".LucidaGrandeUI"), local("Ubuntu Light"), local("Segoe UI Light"),
-       local("Roboto-Light"), local("DroidSans"), local("Tahoma");
-}
-
 a{
   color:black;
   font-weight: bold;
@@ -22,11 +13,11 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-    font-family: system;
+    font-family: "San Francisco", "Helvetica Neue", Helvetica, Roboto, sans-serif;
     background-color: #f4f4f4;
 }
 #map-canvas { 
-  height: 40%;
+  height: 30%;
   vertical-align: middle;
   padding: 1em;
 }
@@ -66,7 +57,6 @@ label{
   
 }
 
-
 select,input{
   background-color: white;
   border: 1px solid #aaa;
@@ -98,78 +88,75 @@ select,input{
   width: 208px;
   height: 35px;
 }
+.card {
+  position: relative;
+  bottom: 0;
+  background-color: #fff;
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+  border-radius: 2px;
+  height: 40%;
+  width: 100%;
+  overflow-y: scroll;
+  -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
 
-  .card {
+.card .card-action {
+  position: relative;
+  background-color: inherit;
+  border-top: 1px solid rgba(160, 160, 160, 0.2);
+  padding: 16px 24px;
+}
 
-    position: relative;
-    bottom: 0;
-    background-color: #fff;
-    -webkit-transition: -webkit-box-shadow .25s;
-    transition: -webkit-box-shadow .25s;
-    transition: box-shadow .25s;
-    transition: box-shadow .25s, -webkit-box-shadow .25s;
-    border-radius: 2px;
-    height: 40%;
-    width: 100%;
-    overflow-y: scroll;
-    -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
-  }
-  
-  .card .card-action {
-    position: relative;
-    background-color: inherit;
-    border-top: 1px solid rgba(160, 160, 160, 0.2);
-    padding: 16px 24px;
-  }
-  
-  .card .card-action:last-child {
-    border-radius: 0 0 2px 2px;
-  }
+.card .card-action:last-child {
+  border-radius: 0 0 2px 2px;
+}
+.hoverable {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+}
 
-  .hoverable {
-    -webkit-transition: -webkit-box-shadow .25s;
-    transition: -webkit-box-shadow .25s;
-    transition: box-shadow .25s;
-    transition: box-shadow .25s, -webkit-box-shadow .25s;
-  }
-  
-  .hoverable:hover {
-    -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-            box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  
-  
-  .card .card-reveal {
-    padding: 24px;
-    position: absolute;
-    background-color: #fff;
-    width: 100%;
-    overflow-y: auto;
-    left: 0;
-    top: 100%;
-    height: 100%;
-    z-index: 3;
-    display: none;
-  }
-  
-  .card .card-reveal .card-title {
-    cursor: pointer;
-    display: block;
-  }
-  
-  .sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #c62828;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-    color:white;
+.hoverable:hover {
+  -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+
+.card .card-reveal {
+  padding: 24px;
+  position: absolute;
+  background-color: #fff;
+  width: 100%;
+  overflow-y: auto;
+  left: 0;
+  top: 100%;
+  height: 100%;
+  z-index: 3;
+  display: none;
+}
+
+.card .card-reveal .card-title {
+  cursor: pointer;
+  display: block;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #c62828;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  color:white;
 }
 
 .sidenav h1{
@@ -240,7 +227,7 @@ nav a{
 
 nav span{
     text-align: left;
-    padding-left: 3em;
+    padding-left: 4em;
     font-size:16pt;
     font-weight: bold;
     width: 100%;
@@ -268,6 +255,7 @@ nav a:hover {
   border-width: 0;
   outline: none;
   border-radius: 2px;
+  border: 1px solid white;
   box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
   
   background-color: #c62828;
@@ -277,7 +265,6 @@ nav a:hover {
   padding: 14px 10px;
   font-size: 16px;
   cursor: pointer;
-  font-family: system;
 }
 
 .btn:hover, .btn:focus {
