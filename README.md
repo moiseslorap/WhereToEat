@@ -4,7 +4,7 @@ Built a cross platform mobile app that displays the nearest restaurants to the u
 - Uses the Google Maps API to display markers for the nearby restaurants. 
 - **Technologies Used:** Zomato API, Google Maps API, Apache Cordova,  HTML5, Javascript, CSS3, Git.
 
-## How to run
+## How to run on different platforms
 1. Install Cordova through npm
 2. Execute the command : **cordova create whereToEat com.yourname.whereToEat WhereToEat**
 3. Download the www folder and use it replace the one on the whereToEat folder
